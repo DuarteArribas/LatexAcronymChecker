@@ -10,21 +10,25 @@ def getAcronymList(acronymFile):
     return listOfAcronyms
 
 
-#def getListOfAcronymsWithoutAc(file):
-#  with open(file,"r") as f:
-#    lines = f.readlines()
-#    acronymsWithoutAc = []
-#    for line in lines:
-#      for word in line.split(" "):
-#        
-#    
-#    return acronymsWithoutAc  
+def getListOfAcronymsWithoutAc(file,acronyms):
+  with open(file,"r") as f:
+    lines = f.readlines()
+    acronymsWithoutAc = []
+    for line in lines:
+      for word in line.split(" "):
+        for acronym in acronyms:
+          if acronym in word:
+            if all([acronymPrefix not in word for acronymPrefix in ["\\ac","\\Ac"]]):
+              print(word)
+        
+    
+    return acronymsWithoutAc  
 
 def main():
   if len(sys.argv) != 3:
     print("Usage: python main.py fileToCheck acronymFile")
     sys.exit(-1)
-  print(getAcronymList(sys.argv[2]))
+  print(getListOfAcronymsWithoutAc(sys.argv[1],getAcronymList(sys.argv[2])))
 
 if __name__ == "__main__":
   main()
