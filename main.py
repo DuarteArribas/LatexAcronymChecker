@@ -16,27 +16,35 @@ def getListOfAcronymsWithoutAc(file,acronyms):
     acronymsWithoutAc = []
     lineCount = 1
     for line in lines:
-      for word in line.split(" "):
-        for acronym in acronyms:
-          if acronym in word:
-            if all([acronymPrefix not in word for acronymPrefix in ["\\ac","\\Ac"]]) and "\\label" not in word and line.strip()[0] != "%":
-              acronymsWithoutAc.append((acronym,lineCount,line))
+      for w in line.split(" "):
+        for word in w.split("/"):
+          for acronym in acronyms:
+            if acronym in word:
+              if all([acronymPrefix not in word for acronymPrefix in ["\\ac","\\Ac"]]) and "\\label" not in word and line.strip()[0] != "%":
+                acronymsWithoutAc.append((acronym,lineCount,line))
       lineCount += 1
     return acronymsWithoutAc
     
 def printListOfAcronymsWithoutAc(acronymsWithoutAc):
+  
+  print("\n")
+  print("=" * 62)
   if len(acronymsWithoutAc):
-    print(f"There are {len(acronymsWithoutAc)} acronyms not marked as acronyms in the document.")
+    print(f" There are {len(acronymsWithoutAc)} acronyms not marked as acronyms in the document.")
   else:
     print(f"All the acronyms are marked. Good Job!")
     return
-  print("\n\n")
+  print("=" * 62)
+  print("\n")
+  count = 1
   for acronymWithoutAc in acronymsWithoutAc:
-    print(f"| Acronym '{acronymWithoutAc[0]}' on line {acronymWithoutAc[1]} |\n{acronymWithoutAc[2]}")
+    print(f"== Acronym '{acronymWithoutAc[0]}' on line '{acronymWithoutAc[1]}' " + "=" * 30)
+    print(acronymWithoutAc[2])
     print(" " * acronymWithoutAc[2].index(acronymWithoutAc[0]),end='')
     print("^")
     print(" " * acronymWithoutAc[2].index(acronymWithoutAc[0]),end='')
     print("|")
+    count += 1
 
 def main():
   if len(sys.argv) != 3:
