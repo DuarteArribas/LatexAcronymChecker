@@ -18,7 +18,7 @@ def getListOfAcronymsWithoutAc(file,acronyms):
       for word in line.split(" "):
         for acronym in acronyms:
           if acronym in word:
-            if all([acronymPrefix not in word for acronymPrefix in ["\\ac","\\Ac"]]):
+            if all([acronymPrefix not in word for acronymPrefix in ["\\ac","\\Ac"]]) and "\\label" not in word:
               print(word)
         
     
